@@ -1,4 +1,4 @@
-import { MaterialIcons as Icon } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
@@ -9,14 +9,16 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    SafeAreaView,
 } from "react-native";
+import { SafeAreaView as SafeAreaViewRN } from "react-native-safe-area-context";
 import colors from "../../../constants/colors";
 import spacing, { BORDER_RADIUS } from "../../../constants/spacing";
 import { TYPOGRAPHY } from "../../../constants/typography";
 
 export default function HelpScreen() {
   const router = useRouter();
-  const [expandedFaq, setExpandedFaq] = useState(null);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const faqs = [
@@ -120,7 +122,7 @@ export default function HelpScreen() {
       onPress: () => Alert.alert("Chat", "Opening live chat..."),
     },
     {
-      icon: "whatsapp",
+      icon: "chat-bubble",
       title: "WhatsApp",
       description: "Quick response",
       onPress: () => Alert.alert("WhatsApp", "Opening WhatsApp..."),
@@ -128,137 +130,188 @@ export default function HelpScreen() {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
+    <SafeAreaViewRN style={styles.safeArea} edges={["top"]}>
       <View style={styles.header}>
-        <Icon name="help" size={48} color={colors.primary} />
-        <Text style={styles.headerTitle}>How can we help you?</Text>
-        <View style={styles.searchContainer}>
-          <Icon
-            name="search"
-            size={20}
-            color={colors.gray}
-            style={styles.searchIcon}
-          />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search for answers..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholderTextColor={colors.gray}
-          />
-          {searchQuery.length > 0 && (
-            <TouchableOpacity onPress={() => setSearchQuery("")}>
-              <Icon name="close" size={20} color={colors.gray} />
-            </TouchableOpacity>
-          )}
-        </View>
-      </View>
-
-      {/* Quick Tutorials */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Quick Tutorials</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.tutorialScroll}
-        >
-          {tutorials.map((tutorial, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.tutorialCard}
-              onPress={tutorial.onPress}
-            >
-              <Icon name={tutorial.icon} size={32} color={colors.primary} />
-              <Text style={styles.tutorialTitle}>{tutorial.title}</Text>
-              <Text style={styles.tutorialDuration}>{tutorial.duration}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
-
-      {/* FAQ Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
-        <View style={styles.faqContainer}>
-          {filteredFaqs.map((faq) => (
-            <View key={faq.id} style={styles.faqItem}>
-              <TouchableOpacity
-                style={styles.faqQuestion}
-                onPress={() =>
-                  setExpandedFaq(expandedFaq === faq.id ? null : faq.id)
-                }
-              >
-                <Text style={styles.questionText}>{faq.question}</Text>
-                <Icon
-                  name={expandedFaq === faq.id ? "expand-less" : "expand-more"}
-                  size={24}
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
-              {expandedFaq === faq.id && (
-                <View style={styles.faqAnswer}>
-                  <Text style={styles.answerText}>{faq.answer}</Text>
-                </View>
-              )}
-            </View>
-          ))}
-        </View>
-      </View>
-
-      {/* Contact Support */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Contact Support</Text>
-        <View style={styles.contactGrid}>
-          {contactOptions.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.contactCard}
-              onPress={option.onPress}
-            >
-              <View style={styles.contactIcon}>
-                <Icon name={option.icon} size={24} color={colors.white} />
-              </View>
-              <Text style={styles.contactTitle}>{option.title}</Text>
-              <Text style={styles.contactDescription}>
-                {option.description}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-
-      {/* Report a Problem */}
-      <View style={styles.problemSection}>
         <TouchableOpacity
-          style={styles.problemButton}
-          onPress={() =>
-            Alert.alert("Report Problem", "Opening feedback form...")
-          }
+          style={styles.backButton}
+          onPress={() => router.back()}
+          activeOpacity={0.7}
         >
-          <Icon name="bug-report" size={24} color={colors.white} />
-          <Text style={styles.problemButtonText}>Report a Problem</Text>
+          <MaterialIcons name="arrow-back" size={24} color={colors.text.primary} />
         </TouchableOpacity>
+        <Text style={styles.headerTitle}>Help & Support</Text>
+        <View style={styles.headerRight} />
       </View>
 
-      <View style={styles.bottomSpacing} />
-    </ScrollView>
+      <ScrollView 
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Help Header */}
+        <View style={styles.helpHeader}>
+          <MaterialIcons name="help" size={48} color={colors.primary} />
+          <Text style={styles.helpHeaderTitle}>How can we help you?</Text>
+          <View style={styles.searchContainer}>
+            <MaterialIcons
+              name="search"
+              size={20}
+              color={colors.gray}
+              style={styles.searchIcon}
+            />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search for answers..."
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeholderTextColor={colors.gray}
+            />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity onPress={() => setSearchQuery("")}>
+                <MaterialIcons name="close" size={20} color={colors.gray} />
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+
+        {/* Quick Tutorials */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Quick Tutorials</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.tutorialScroll}
+          >
+            {tutorials.map((tutorial, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.tutorialCard}
+                onPress={tutorial.onPress}
+              >
+                <MaterialIcons name={tutorial.icon as any} size={32} color={colors.primary} />
+                <Text style={styles.tutorialTitle}>{tutorial.title}</Text>
+                <Text style={styles.tutorialDuration}>{tutorial.duration}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* FAQ Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
+          <View style={styles.faqContainer}>
+            {filteredFaqs.map((faq) => (
+              <View key={faq.id} style={styles.faqItem}>
+                <TouchableOpacity
+                  style={styles.faqQuestion}
+                  onPress={() =>
+                    setExpandedFaq(expandedFaq === faq.id ? null : faq.id)
+                  }
+                >
+                  <Text style={styles.questionText}>{faq.question}</Text>
+                  <MaterialIcons
+                    name={expandedFaq === faq.id ? "expand-less" : "expand-more"}
+                    size={24}
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+                {expandedFaq === faq.id && (
+                  <View style={styles.faqAnswer}>
+                    <Text style={styles.answerText}>{faq.answer}</Text>
+                  </View>
+                )}
+              </View>
+            ))}
+          </View>
+        </View>
+
+        {/* Contact Support */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Contact Support</Text>
+          <View style={styles.contactGrid}>
+            {contactOptions.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.contactCard}
+                onPress={option.onPress}
+              >
+                <View style={styles.contactIcon}>
+                  <MaterialIcons name={option.icon as any} size={24} color={colors.white} />
+                </View>
+                <Text style={styles.contactTitle}>{option.title}</Text>
+                <Text style={styles.contactDescription}>
+                  {option.description}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Report a Problem */}
+        <View style={styles.problemSection}>
+          <TouchableOpacity
+            style={styles.problemButton}
+            onPress={() =>
+              Alert.alert("Report Problem", "Opening feedback form...")
+            }
+          >
+            <MaterialIcons name="bug-report" size={24} color={colors.white} />
+            <Text style={styles.problemButtonText}>Report a Problem</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.bottomSpacing} />
+      </ScrollView>
+    </SafeAreaViewRN>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.background,
   },
+  scrollContent: {
+    paddingBottom: spacing.xl,
+  },
   header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.lightGray + "40",
+  },
+  headerTitle: {
+    fontSize: TYPOGRAPHY.xl,
+    fontWeight: "bold",
+    color: colors.text.primary,
+  },
+  headerRight: {
+    width: 40,
+  },
+  helpHeader: {
     backgroundColor: colors.white,
     padding: spacing.xl,
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
-  headerTitle: {
+  helpHeaderTitle: {
     fontSize: TYPOGRAPHY.xl,
     fontWeight: "bold",
     color: colors.primary,

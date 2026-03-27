@@ -285,7 +285,7 @@ export default function AdultAttendanceScreen() {
             </TouchableOpacity>
 
             <View style={styles.headerText}>
-              <Text style={styles.headerTitle}>Adult Attendance</Text>
+              <Text style={styles.headerTitle}>Record Adult Attendance</Text>
               <Text style={styles.headerSubtitle}>HCF Members & Visitors</Text>
             </View>
 
@@ -414,8 +414,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    paddingTop: 50,
-    paddingBottom: 20,
+    paddingTop: 2,
+    paddingBottom: 5,
     paddingHorizontal: SPACING.lg,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,

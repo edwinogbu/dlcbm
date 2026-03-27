@@ -356,8 +356,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.sm,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     elevation: 8,

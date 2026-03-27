@@ -278,14 +278,12 @@ const Dashboard: React.FC = () => {
             />
           </View>
           <View>
-            <Text style={styles.greeting}>{getGreeting()},</Text>
-            <Text style={styles.userName}>{userName}</Text>
+            <Text style={styles.greeting}>{getGreeting()}, <Text style={styles.userName}>{userName}</Text></Text>
           </View>
         </View>
         <View style={styles.headerRight}>
           <TouchableOpacity
             style={styles.notificationButton}
-            onPress={() => router.push("/(app)/notifications")}
           >
             <MaterialIcons
               name="notifications-none"
@@ -302,7 +300,7 @@ const Dashboard: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.profileButton}
-            onPress={() => router.push("/(app)/ProfileScreen")}
+            onPress={() => router.push("/(app)/(tabs)/profile")}
           >
             <MaterialIcons
               name="account-circle"
@@ -509,16 +507,18 @@ const styles = StyleSheet.create<Styles>({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    backgroundColor: COLORS.white,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.sm,
+    backgroundColor: COLORS.background,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.lightGray,
     elevation: 4,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 8,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
   headerLeft: {
     flexDirection: "row",

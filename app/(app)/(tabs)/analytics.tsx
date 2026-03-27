@@ -544,13 +544,10 @@ const styles = StyleSheet.create<Styles>({
   },
   header: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    backgroundColor: COLORS.white,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.lightGray,
+    paddingHorizontal: SPACING.sm,
+    borderBottomColor: COLORS.primary,
   },
   backButton: {
     padding: SPACING.xs,

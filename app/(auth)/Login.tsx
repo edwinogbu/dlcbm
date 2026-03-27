@@ -166,17 +166,16 @@ const handleLogin = async (): Promise<void> => {
               <Image
                 source={require('../../assets/logo.png')}
                 style={styles.logo}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </View>
-            <Text style={styles.appName}>Deeper Life Church</Text>
-            <Text style={styles.appSubtitle}>House Caring Fellowship</Text>
           </View>
 
           {/* Welcome Section */}
           <View style={styles.welcomeSection}>
             <Text style={styles.welcomeTitle}>Welcome Back!</Text>
             <Text style={styles.welcomeSubtitle}>Sign in to continue your journey</Text>
+            <Text style={styles.welcomeSubtitle}>Deeper Life Church</Text>
           </View>
 
           {/* Form Section */}
@@ -276,8 +275,6 @@ interface Styles {
   logoSection: ViewStyle;
   logoContainer: ViewStyle;
   logo: ImageStyle;
-  appName: TextStyle;
-  appSubtitle: TextStyle;
   welcomeSection: ViewStyle;
   welcomeTitle: TextStyle;
   welcomeSubtitle: TextStyle;
@@ -328,21 +325,9 @@ const styles = StyleSheet.create<Styles>({
     shadowRadius: 8,
   },
   logo: {
-    width: '55%',
-    height: '55%',
-  },
-  appName: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.white,
-    textAlign: 'center',
-    marginBottom: 2,
-  },
-  appSubtitle: {
-    fontSize: 13,
-    color: colors.white,
-    opacity: 0.9,
-    textAlign: 'center',
+    width: '100%',
+    height: '100%',
+    borderRadius: width * 0.1,
   },
   welcomeSection: {
     alignItems: 'center',

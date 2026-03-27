@@ -415,7 +415,7 @@ export default function OfferingScreen() {
     };
 
     return (
-        <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={[styles.container, { paddingTop:1 }]}>
             {/* Header with Financial Theme */}
             <LinearGradient
                 colors={[COLORS.success, COLORS.primary]}
@@ -714,20 +714,20 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     header: {
-        paddingHorizontal: SPACING.lg,
-        paddingVertical: SPACING.lg,
+        paddingHorizontal: SPACING.sm,
+        paddingVertical: SPACING.sm,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
         elevation: 8,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
-        shadowRadius: 8,
+        shadowRadius: 4,
     },
     headerContent: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: SPACING.md,
+        marginBottom: SPACING.sm,
     },
     backButton: {
         width: 40,
@@ -1014,7 +1014,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.border,
         borderRadius: 8,
         backgroundColor: COLORS.white,
-        marginHorizontal: SPACING.xs,
+        marginHorizontal: SPACING.sm,
     },
     currencySymbolSmall: {
         fontSize: TYPOGRAPHY.sm,
@@ -1058,7 +1058,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: SPACING.md,
+        marginTop: SPACING.lg,
         paddingTop: SPACING.md,
         borderTopWidth: 1,
         borderTopColor: COLORS.border,

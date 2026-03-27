@@ -317,7 +317,7 @@ export default function ChildrenAttendanceScreen() {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop:1 }]}>
       {/* Playful Header */}
       <LinearGradient
         colors={["#FF9A8B", "#FF6B6B"]}
@@ -541,7 +541,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.lg,
+    paddingVertical: SPACING.sm,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     elevation: 8,
@@ -573,7 +573,7 @@ const styles = StyleSheet.create({
   headerContent: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   backButton: {
     width: 40,

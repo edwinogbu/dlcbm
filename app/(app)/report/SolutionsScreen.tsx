@@ -451,7 +451,7 @@ export default function SolutionsScreen() {
     ).length;
 
     return (
-        <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={[styles.container, { paddingTop:1 }]}>
             {/* Header with Solution Theme */}
             <LinearGradient
                 colors={[COLORS.success, COLORS.primary]}
@@ -709,8 +709,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     header: {
-        paddingHorizontal: SPACING.lg,
-        paddingVertical: SPACING.lg,
+        paddingHorizontal: SPACING.sm,
+        paddingVertical: SPACING.sm,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
         elevation: 8,
@@ -742,7 +742,7 @@ const styles = StyleSheet.create({
     headerContent: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: SPACING.md,
+        marginBottom: SPACING.sm,
     },
     backButton: {
         width: 40,

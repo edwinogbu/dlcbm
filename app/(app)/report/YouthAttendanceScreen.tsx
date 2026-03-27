@@ -301,7 +301,7 @@ export default function YouthAttendanceScreen() {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop:1 }]}>
       {/* Premium Header */}
       <LinearGradient
         colors={[COLORS.secondary, COLORS.primary]}
@@ -319,7 +319,7 @@ export default function YouthAttendanceScreen() {
           </TouchableOpacity>
 
           <View style={styles.headerTextContainer}>
-            <Text style={styles.headerTitle}>Youth Attendance</Text>
+            <Text style={styles.headerTitle}>Record Youth Attendance</Text>
             <Text style={styles.headerSubtitle}>
               HCF Youth Members & Visitors
             </Text>
@@ -495,20 +495,20 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   header: {
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.sm,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     elevation: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
-    shadowRadius: 8,
+    shadowRadius: 2,
   },
   headerContent: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   backButton: {
     width: 40,

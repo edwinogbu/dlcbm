@@ -26,7 +26,7 @@ import { useReport } from "../../../context/ReportContext";
 const { width } = Dimensions.get("window");
 
 // Stat Card Component
-const StatCard = ({ icon, label, value, color, trend }) => (
+const StatCard = ({ icon, label, value, color, trend = undefined }) => (
   <LinearGradient
     colors={[color + "15", color + "05"]}
     style={styles.statCard}
@@ -960,68 +960,134 @@ export default function ReportHistoryScreen() {
     console.log("Saved Reports:", savedReports.length);
   }, []);
 
+  // const filteredReports = useMemo(() => {
+  //   let reports = [...savedReports];
+
+  //   if (searchQuery) {
+  //     reports = reports.filter(
+  //       (report) =>
+  //         report.groupName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         report.groupPastor?.toLowerCase().includes(searchQuery.toLowerCase()),
+  //     );
+  //   }
+
+  //   if (filterType === "synced") {
+  //     reports = reports.filter((r) => r.synced);
+  //   } else if (filterType === "pending") {
+  //     reports = reports.filter((r) => !r.synced);
+  //   }
+
+  //   reports.sort((a, b) => {
+  //     if (sortBy === "date") {
+  //       return new Date(b.date) - new Date(a.date);
+  //     } else if (sortBy === "group") {
+  //       return (a.groupName || "").localeCompare(b.groupName || "");
+  //     } else if (sortBy === "attendance") {
+  //       const aTotal =
+  //         a.districts?.reduce((sum, d) => {
+  //           return (
+  //             sum +
+  //             (d.adult?.membersMale || 0) +
+  //             (d.adult?.membersFemale || 0) +
+  //             (d.adult?.visitorsMale || 0) +
+  //             (d.adult?.visitorsFemale || 0) +
+  //             (d.youth?.membersMale || 0) +
+  //             (d.youth?.membersFemale || 0) +
+  //             (d.youth?.visitorsMale || 0) +
+  //             (d.youth?.visitorsFemale || 0) +
+  //             (d.children?.members || 0) +
+  //             (d.children?.visitors || 0)
+  //           );
+  //         }, 0) || 0;
+  //       const bTotal =
+  //         b.districts?.reduce((sum, d) => {
+  //           return (
+  //             sum +
+  //             (d.adult?.membersMale || 0) +
+  //             (d.adult?.membersFemale || 0) +
+  //             (d.adult?.visitorsMale || 0) +
+  //             (d.adult?.visitorsFemale || 0) +
+  //             (d.youth?.membersMale || 0) +
+  //             (d.youth?.membersFemale || 0) +
+  //             (d.youth?.visitorsMale || 0) +
+  //             (d.youth?.visitorsFemale || 0) +
+  //             (d.children?.members || 0) +
+  //             (d.children?.visitors || 0)
+  //           );
+  //         }, 0) || 0;
+  //       return bTotal - aTotal;
+  //     }
+  //     return 0;
+  //   });
+
+  //   return reports;
+  // }, [savedReports, searchQuery, filterType, sortBy]);
+
   const filteredReports = useMemo(() => {
-    let reports = [...savedReports];
+  let reports = [...savedReports];
 
-    if (searchQuery) {
-      reports = reports.filter(
-        (report) =>
-          report.groupName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          report.groupPastor?.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
+  if (searchQuery) {
+    reports = reports.filter(
+      (report) =>
+        report.groupName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        report.groupPastor?.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }
+
+  if (filterType === "synced") {
+    reports = reports.filter((r) => r.synced);
+  } else if (filterType === "pending") {
+    reports = reports.filter((r) => !r.synced);
+  }
+
+  reports.sort((a, b) => {
+    if (sortBy === "date") {
+      // Fix: Convert dates to timestamps before subtracting
+      const dateA = a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b.date ? new Date(b.date).getTime() : 0;
+      return dateB - dateA;
+    } else if (sortBy === "group") {
+      return (a.groupName || "").localeCompare(b.groupName || "");
+    } else if (sortBy === "attendance") {
+      const aTotal =
+        a.districts?.reduce((sum, d) => {
+          return (
+            sum +
+            (d.adult?.membersMale || 0) +
+            (d.adult?.membersFemale || 0) +
+            (d.adult?.visitorsMale || 0) +
+            (d.adult?.visitorsFemale || 0) +
+            (d.youth?.membersMale || 0) +
+            (d.youth?.membersFemale || 0) +
+            (d.youth?.visitorsMale || 0) +
+            (d.youth?.visitorsFemale || 0) +
+            (d.children?.members || 0) +
+            (d.children?.visitors || 0)
+          );
+        }, 0) || 0;
+      const bTotal =
+        b.districts?.reduce((sum, d) => {
+          return (
+            sum +
+            (d.adult?.membersMale || 0) +
+            (d.adult?.membersFemale || 0) +
+            (d.adult?.visitorsMale || 0) +
+            (d.adult?.visitorsFemale || 0) +
+            (d.youth?.membersMale || 0) +
+            (d.youth?.membersFemale || 0) +
+            (d.youth?.visitorsMale || 0) +
+            (d.youth?.visitorsFemale || 0) +
+            (d.children?.members || 0) +
+            (d.children?.visitors || 0)
+          );
+        }, 0) || 0;
+      return bTotal - aTotal;
     }
+    return 0;
+  });
 
-    if (filterType === "synced") {
-      reports = reports.filter((r) => r.synced);
-    } else if (filterType === "pending") {
-      reports = reports.filter((r) => !r.synced);
-    }
-
-    reports.sort((a, b) => {
-      if (sortBy === "date") {
-        return new Date(b.date) - new Date(a.date);
-      } else if (sortBy === "group") {
-        return (a.groupName || "").localeCompare(b.groupName || "");
-      } else if (sortBy === "attendance") {
-        const aTotal =
-          a.districts?.reduce((sum, d) => {
-            return (
-              sum +
-              (d.adult?.membersMale || 0) +
-              (d.adult?.membersFemale || 0) +
-              (d.adult?.visitorsMale || 0) +
-              (d.adult?.visitorsFemale || 0) +
-              (d.youth?.membersMale || 0) +
-              (d.youth?.membersFemale || 0) +
-              (d.youth?.visitorsMale || 0) +
-              (d.youth?.visitorsFemale || 0) +
-              (d.children?.members || 0) +
-              (d.children?.visitors || 0)
-            );
-          }, 0) || 0;
-        const bTotal =
-          b.districts?.reduce((sum, d) => {
-            return (
-              sum +
-              (d.adult?.membersMale || 0) +
-              (d.adult?.membersFemale || 0) +
-              (d.adult?.visitorsMale || 0) +
-              (d.adult?.visitorsFemale || 0) +
-              (d.youth?.membersMale || 0) +
-              (d.youth?.membersFemale || 0) +
-              (d.youth?.visitorsMale || 0) +
-              (d.youth?.visitorsFemale || 0) +
-              (d.children?.members || 0) +
-              (d.children?.visitors || 0)
-            );
-          }, 0) || 0;
-        return bTotal - aTotal;
-      }
-      return 0;
-    });
-
-    return reports;
-  }, [savedReports, searchQuery, filterType, sortBy]);
+  return reports;
+}, [savedReports, searchQuery, filterType, sortBy]);
 
   const handleDeleteReport = (reportId) => {
     Alert.alert(
@@ -1099,13 +1165,13 @@ export default function ReportHistoryScreen() {
   }
 
   return (
-    <View style={[styles.container, { paddingTop: 0 }]}>
-      {/* ✅ HEADER WITH BACK BUTTON ADDED */}
+    <View style={[styles.container, { paddingTop: 1 }]}>
+
       <LinearGradient
-        colors={[COLORS.primary, COLORS.primaryDark]}
+        colors={[COLORS.secondary, COLORS.primaryDark]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={[styles.header, { paddingTop: insets.top + 10 }]}
+        style={[styles.header, { paddingTop:1 }]}
       >
         <View style={styles.headerContent}>
           <TouchableOpacity
@@ -1236,7 +1302,7 @@ export default function ReportHistoryScreen() {
             onEdit={() =>
               router.push({
                 pathname: "/(app)/report/GroupInfoScreen",
-                params: { reportId: item.id, edit: true },
+                params: { reportId: item.id, edit: "true" },
               })
             }
             onDelete={() => handleDeleteReport(item.id)}
@@ -1292,12 +1358,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background,
   },
-  // ✅ NEW HEADER STYLES
   header: {
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.sm,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
   headerContent: {
     flexDirection: "row",

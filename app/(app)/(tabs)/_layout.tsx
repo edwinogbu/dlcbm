@@ -87,7 +87,7 @@ export default function TabsLayout() {
           <MaterialIcons name="menu" size={24} color={colors.white} />
         </TouchableOpacity>
 
-        <View style={styles.headerCenter}>
+        {/* <View style={styles.headerCenter}>
           <Image
             source={require("../../../assets/logo.png")}
             style={styles.headerLogo}
@@ -97,7 +97,7 @@ export default function TabsLayout() {
             <Text style={styles.greeting}>Welcome back,</Text>
             <Text style={styles.userName}>Pastor Eddy</Text>
           </View>
-        </View>
+        </View> */}
 
         <TouchableOpacity style={styles.notificationButton} activeOpacity={0.7}>
           <MaterialIcons name="notifications-none" size={24} color={colors.white} />
@@ -107,7 +107,7 @@ export default function TabsLayout() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.headerFooter}>
+      {/* <View style={styles.headerFooter}>
         <Text style={styles.churchName}>Deeper Life Bible Church</Text>
         <Text style={styles.region}>Ogun West • HCF</Text>
       </View>
@@ -127,7 +127,7 @@ export default function TabsLayout() {
           <Text style={styles.statValue}>₦45k</Text>
           <Text style={styles.statLabel}>Offerings</Text>
         </View>
-      </View>
+      </View> */}
     </LinearGradient>
   );
 
